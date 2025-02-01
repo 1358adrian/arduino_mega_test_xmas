@@ -1,12 +1,12 @@
 #include "notes_display.h"
 // #include "notes_display_netlify.h" // Using https://arduinomidi.netlify.app/ for MIDI to Arduino conversion
 
-const int buzzerPin = 13;
-const int buttonPin = 12;
+const uint8_t buzzerPin = 13;
+const uint8_t buttonPin = 12;
 
 // Variable to hold the button state
-int buttonState = 0;
-int buttonStateInPlayMidi = 0;
+bool buttonState = 0;
+bool buttonStateInPlayMidi = 0;
 
 unsigned long snapMemoryMillis = 0;
 unsigned long loopMemoryMillis = 0;
@@ -19,8 +19,8 @@ void buttonReleaseMemSetToTrue() {
   }
 }
 
-void playMidi(int pin, const unsigned long notes[][3], size_t len){
-  for (int i = 0; i < len; i++) {
+void playMidi(uint8_t pin, const unsigned long notes[][3], size_t len){
+  for (uint8_t i = 0; i < len; i++) {
     buttonReleaseMemSetToTrue();
     if (buttonStateInPlayMidi == LOW && buttonReleaseMem == true) break;
     snapMemoryMillis = millis();
@@ -49,12 +49,12 @@ void setup() {
   pinMode(buzzerPin, OUTPUT);  // Set buzzer pin as output
   pinMode(buttonPin, INPUT_PULLUP);  // Set button pin as input with internal pull-up resistor
   // Initialize pin modes for A-G pins
-  for (int i = 0; i < 7; i++) {
+  for (uint8_t i = 0; i < 7; i++) {
     pinMode(pins[i], OUTPUT);
   }
   
   // Initialize pin modes for D1, D2, D3
-  for (int i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < 3; i++) {
     pinMode(digits[i], OUTPUT);
   }
 }

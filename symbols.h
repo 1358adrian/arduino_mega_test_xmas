@@ -1,14 +1,14 @@
-const int pins[] = {2, 3, 4, 5, 6, 7, 8}; // A, B, C, D, E, F, G
-const int digits[] = {9, 10, 11}; // D1, D2, D3
-const int delayTime = 1;
+const uint8_t pins[] = {2, 3, 4, 5, 6, 7, 8}; // A, B, C, D, E, F, G
+const uint8_t digits[] = {9, 10, 11}; // D1, D2, D3
+const uint8_t delayTime = 1;
 
-void setDigitState(int D1State, int D2State, int D3State) {
+void setDigitState(uint8_t D1State, uint8_t D2State, uint8_t D3State) {
   digitalWrite(digits[0], D1State);
   digitalWrite(digits[1], D2State);
   digitalWrite(digits[2], D3State);
 }
 
-void setSegmentState(int A, int B, int C, int D, int E, int F, int G) {
+void setSegmentState(uint8_t A, uint8_t B, uint8_t C, uint8_t D, uint8_t E, uint8_t F, uint8_t G) {
   digitalWrite(pins[0], A);
   digitalWrite(pins[1], B);
   digitalWrite(pins[2], C);
@@ -19,7 +19,7 @@ void setSegmentState(int A, int B, int C, int D, int E, int F, int G) {
 }
 
 void clearSegments() {
-  for (int i = 0; i < 7; i++) {
+  for (uint8_t i = 0; i < 7; i++) {
     digitalWrite(pins[i], LOW);
   }
 }
