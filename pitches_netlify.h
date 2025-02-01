@@ -1,7 +1,7 @@
 #include "note_define_netlify.h"
 
 // Chromatic scale test
-const int midi1[128][3] = {
+const unsigned long midi1[128][3] = {
  {CN1, 500, 0},
  {CbN1, 500, 0},
  {DN1, 500, 0},
