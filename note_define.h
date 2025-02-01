@@ -1,0 +1,23 @@
+#define ARRAY_LEN(array) (sizeof(array) / sizeof(array[0]))
+#define c5 523
+#define d5 587
+#define e5 659
+#define f5 698
+#define g5 784
+#define ab5 831
+#define a5 880
+#define bb5 932
+#define b5 988
+#define c6 1047
+#define db6 1109
+#define d6 1175
+#define eb6 1245
+#define e6 1319
+#define f6 1397
+#define gb6 1480
+#define g6 1568
+#define ab6 1661
+#define a6 1760
+#define bb6 1865
+#define b6 1976
+#define c7 2093
