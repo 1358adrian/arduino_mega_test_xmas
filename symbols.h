@@ -74,17 +74,17 @@ void letterN() {
   setSegmentState(LOW, LOW, HIGH, LOW, HIGH, LOW, HIGH);
 }
 
-void letterO() {
-  setSegmentState(LOW, LOW, HIGH, HIGH, HIGH, LOW, HIGH);
-}
+// void letterO() {
+//   setSegmentState(LOW, LOW, HIGH, HIGH, HIGH, LOW, HIGH);
+// }
 
 void letterT() {
   setSegmentState(LOW, LOW, LOW, HIGH, HIGH, HIGH, HIGH);
 }
 
-void letterP() {
-  setSegmentState(HIGH, HIGH, LOW, LOW, HIGH, HIGH, HIGH);
-}
+// void letterP() {
+//   setSegmentState(HIGH, HIGH, LOW, LOW, HIGH, HIGH, HIGH);
+// }
 
 void symbolDashCenter() {
   setSegmentState(LOW, LOW, LOW, LOW, LOW, LOW, HIGH);
@@ -94,13 +94,13 @@ void symbolBlank() {
   setSegmentState(LOW, LOW, LOW, LOW, LOW, LOW, LOW);
 }
 
-void numberNeg1() {
-  setSegmentState(LOW, HIGH, HIGH, LOW, LOW, LOW, HIGH);
-}
+// void numberNeg1() {
+//   setSegmentState(LOW, HIGH, HIGH, LOW, LOW, LOW, HIGH);
+// }
 
-void number0() {
-  setSegmentState(HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, LOW);  // 0: ABCDEF
-}
+// void number0() {
+//   setSegmentState(HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, LOW);  // 0: ABCDEF
+// }
 
 void number1() {
   setSegmentState(LOW, HIGH, HIGH, LOW, LOW, LOW, LOW);  // 1: BC
