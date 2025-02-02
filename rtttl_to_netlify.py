@@ -35,8 +35,7 @@ def parse_rtttl(rtttl_str):
         
         if name.lower() == 'p':  # It's a pause
             rest_time += duration_map.get(duration, base_duration) * (1.5 if dotted else 1)
-            result.append(f"{{{0}, {int(0)}, {int(rest_time)}}}")
-            #result.append(f"{{{formatted_note}, {int(note_duration)}, {int(rest_time)}}}")
+            result.append(f"{{{0}, {int(0)}, {int(note_duration)}}}")
             continue
         
         # Compute note duration
