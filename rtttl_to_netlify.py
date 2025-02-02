@@ -16,6 +16,7 @@ def parse_rtttl(rtttl_str):
         4: base_duration,
         8: base_duration / 2,
         16: base_duration / 4,
+        32: base_duration / 8,
     }
     
     # Parse notes
