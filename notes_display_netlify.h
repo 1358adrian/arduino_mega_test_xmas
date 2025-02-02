@@ -2,7 +2,7 @@
 #include "pitches_netlify.h"
 
 struct NoteDisplay {
-    unsigned long note;
+    uint16_t note;
     void (*digit1Func)();
     void (*digit2Func)();
     void (*digit3Func)();
@@ -116,7 +116,7 @@ const NoteDisplay noteMappings[] = {
     {G9, symbolBlank, letterG, number9},
 };
 
-void noteOnDisplay(unsigned long note) {
+void noteOnDisplay(uint16_t note) {
     for (const auto& entry : noteMappings) {
         if (entry.note == note) {
             digit1();
