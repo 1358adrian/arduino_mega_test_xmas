@@ -34,10 +34,9 @@ def parse_rtttl(rtttl_str):
         octave = int(octave) if octave else default_o
         
         if name.lower() == 'p':  # It's a pause
-            note_duration = duration_map.get(duration, base_duration)
-            if dotted:
-                note_duration *= 1.5
-            result.append(f"{{{0}, {int(0)}, {int(note_duration)}}}")
+            rest_time += duration_map.get(duration, base_duration) * (1.5 if dotted else 1)
+            result.append(f"{{{0}, {int(0)}, {int(rest_time)}}}")
+            #result.append(f"{{{formatted_note}, {int(note_duration)}, {int(rest_time)}}}")
             continue
         
         # Compute note duration
