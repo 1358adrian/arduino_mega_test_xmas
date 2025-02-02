@@ -34,7 +34,9 @@ def parse_rtttl(rtttl_str):
         octave = int(octave) if octave else default_o
         
         if name.lower() == 'p':  # It's a pause
-            rest_time += duration_map.get(duration, base_duration) * (1.5 if dotted else 1)
+            note_duration = duration_map.get(duration, base_duration)
+            if dotted:
+                note_duration *= 1.5
             result.append(f"{{{0}, {int(0)}, {int(note_duration)}}}")
             continue
         
@@ -52,6 +54,6 @@ def parse_rtttl(rtttl_str):
     return ',\n'.join(result)
 
 # Example usage
-rtttl = "SongTest:d=4,o=5,b=120:c,d,4e.,8f,g,4p,8p,a,b,2c6,c#"
+rtttl = "SongTest:d=4,o=5,b=120:c,1c,2c,4c,8c,16c,32c,1c.,2c.,4c.,8c.,16c.,32c.,1p.,2p.,4p.,8p.,16p.,32p.,1c#.,2c#.,4c#.,8c#.,16c#.,32c#."
 replace_rtttl = rtttl.replace('#', 'b')
 print(parse_rtttl(replace_rtttl))
