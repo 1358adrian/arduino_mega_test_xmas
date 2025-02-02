@@ -25,11 +25,11 @@ def parse_rtttl(rtttl_str):
     rest_time = 0  # Tracks accumulated rest duration
 
     for note in notes:
-        match = re.match(r'(\d*)([a-gpA-G#]+)(\.?)(\d*)', note)
+        match = re.match(r'(\d*)([a-gpA-G#]+)(\d*)(\.?)', note)
         if not match:
             continue
         
-        duration, name, dotted, octave = match.groups()
+        duration, name, octave, dotted = match.groups()
         duration = int(duration) if duration else default_d
         octave = int(octave) if octave else default_o
         
@@ -54,6 +54,6 @@ def parse_rtttl(rtttl_str):
     return ',\n'.join(result)
 
 # Example usage
-rtttl = "SongTest:d=4,o=5,b=120:c,1c,2c,4c,8c,16c,32c,1c.,2c.,4c.,8c.,16c.,32c.,1p.,2p.,4p.,8p.,16p.,32p.,1c#.,2c#.,4c#.,8c#.,16c#.,32c#."
+rtttl = "Toreador:d=16,o=4,b=80,l=15:8c5,d5.,32c5,a.,32p,a.,32p,a.,32g,a.,32a#,8a.,p,8a#,g.,32c5,8a.,p,8f,d.,32g,8c.,p,4g,g,d5,c5,a#,a,g,a,a#,8a.,p,8e,a.,32p,8a,g#.,32b,8e5.,e5,8e5,8e5,p,d5,c#5,d5,g,a,8a#,p,a,f,d5,4c5,p,f,c,a#,8a,8g,8f.,p,4p,8c5,d5.,32c5,a.,32p,a.,32p,a.,32g,a.,32a#,8a.,p,8a#,g.,32c5,8a.,p,8f,d.,32g,8c."
 replace_rtttl = rtttl.replace('#', 'b')
 print(parse_rtttl(replace_rtttl))
