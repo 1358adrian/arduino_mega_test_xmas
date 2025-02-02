@@ -1,6 +1,6 @@
 #include "note_define.h"
 
-const unsigned long midi1[500][3] = {
+const uint16_t midi1[500][3] = {
  {a5, 73, 73},
  {bb5, 63, 73},
  {c6, 240, 63},
