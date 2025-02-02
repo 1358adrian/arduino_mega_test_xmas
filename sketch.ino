@@ -20,7 +20,7 @@ void buttonReleaseMemSetToTrue() {
 }
 
 void playMidi(uint8_t pin, const unsigned long notes[][3], size_t len){
-  for (uint8_t i = 0; i < len; i++) {
+  for (uint16_t i = 0; i < len; i++) {  // Maximum of 2^16 notes; use `for (uint8_t i = 0; i < len; i++) {` if maximum of 256 notes; if maximum note limit has been reached, it endlessly loops until the button is pressed to stop
     buttonReleaseMemSetToTrue();
     if (buttonStateInPlayMidi == LOW && buttonReleaseMem == true) break;
     snapMemoryMillis = millis();
