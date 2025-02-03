@@ -1,32 +1,39 @@
-const uint8_t pins[] = {2, 3, 4, 5, 6, 7, 8}; // A, B, C, D, E, F, G
+const uint8_t dataPin= 8;     // DS of 74HC595
+const uint8_t latchPin = 7;   // ST_CP of 74HC595
+const uint8_t clockPin= 6;   // SH_CP of 74HC595
+
 const uint8_t digits[] = {9, 10, 11}; // D1, D2, D3
+
 const uint8_t delayTime = 1;
 
-void setDigitState(uint8_t D1State, uint8_t D2State, uint8_t D3State) {
+// 7-segment symbol patterns (common cathode display)
+const uint8_t symbols[20] = {
+  0b00000000,  // symbolBlank or clearSegments
+  0b10000110,  // 1
+  0b01011011,  // 2
+  0b01001111,  // 3
+  0b01100110,  // 4
+  0b01101101,  // 5
+  0b01111101,  // 6
+  0b00000111,  // 7
+  0b01111111,  // 8
+  0b01101111,   // 9
+  0b01000000,   // -
+  0b00111001,   // C
+  0b01011110,   // D
+  0b01111001,   // E
+  0b01110001,   // F
+  0b00111101,   // G
+  0b01110111,   // A
+  0b01111100,   // B
+  0b01010100,   // n
+  0b01111000,   // t
+};
+
+void setDigitState(bool D1State, bool D2State, bool D3State) {
   digitalWrite(digits[0], D1State);
   digitalWrite(digits[1], D2State);
   digitalWrite(digits[2], D3State);
-}
-
-void setSegmentState(uint8_t A, uint8_t B, uint8_t C, uint8_t D, uint8_t E, uint8_t F, uint8_t G) {
-  digitalWrite(pins[0], A);
-  digitalWrite(pins[1], B);
-  digitalWrite(pins[2], C);
-  digitalWrite(pins[3], D);
-  digitalWrite(pins[4], E);
-  digitalWrite(pins[5], F);
-  digitalWrite(pins[6], G);
-}
-
-void clearSegments() {
-  for (uint8_t i = 0; i < 7; i++) {
-    digitalWrite(pins[i], LOW);
-  }
-}
-
-void delayAndClearSegments() {
-  delay(delayTime);
-  clearSegments();
 }
 
 void digit1() {
@@ -41,100 +48,118 @@ void digit3() {
   setDigitState(HIGH, HIGH, LOW);
 }
 
+void latchPinHighLow() {
+  digitalWrite(latchPin, HIGH);
+  digitalWrite(latchPin, LOW);
+}
+
+void clearSegments() {
+  shiftOut(dataPin, clockPin, MSBFIRST, symbols[0]);
+  latchPinHighLow();
+}
+
+void delayAndClearSegments() {
+  delay(delayTime);
+  clearSegments();
+}
+
 
 void letterC() {
-  setSegmentState(HIGH, LOW, LOW, HIGH, HIGH, HIGH, LOW);
+  shiftOut(dataPin, clockPin, MSBFIRST, symbols[11]);
+  latchPinHighLow();
 }
 
 void letterD() {
-  setSegmentState(LOW, HIGH, HIGH, HIGH, HIGH, LOW, HIGH);
+  shiftOut(dataPin, clockPin, MSBFIRST, symbols[12]);
+  latchPinHighLow();
 }
 
 void letterE() {
-  setSegmentState(HIGH, LOW, LOW, HIGH, HIGH, HIGH, HIGH);
+  shiftOut(dataPin, clockPin, MSBFIRST, symbols[13]);
+  latchPinHighLow();
 }
 
 void letterF() {
-  setSegmentState(HIGH, LOW, LOW, LOW, HIGH, HIGH, HIGH);
+  shiftOut(dataPin, clockPin, MSBFIRST, symbols[14]);
+  latchPinHighLow();
 }
 
 void letterG() {
-  setSegmentState(HIGH, LOW, HIGH, HIGH, HIGH, HIGH, LOW);
+  shiftOut(dataPin, clockPin, MSBFIRST, symbols[15]);
+  latchPinHighLow();
 }
 
 void letterA() {
-  setSegmentState(HIGH, HIGH, HIGH, LOW, HIGH, HIGH, HIGH);
+  shiftOut(dataPin, clockPin, MSBFIRST, symbols[16]);
+  latchPinHighLow();
 }
 
 void letterBorFlatSymbol() {
-  setSegmentState(LOW, LOW, HIGH, HIGH, HIGH, HIGH, HIGH);
+  shiftOut(dataPin, clockPin, MSBFIRST, symbols[17]);
+  latchPinHighLow();
 }
 
 void letterN() {
-  setSegmentState(LOW, LOW, HIGH, LOW, HIGH, LOW, HIGH);
+  shiftOut(dataPin, clockPin, MSBFIRST, symbols[18]);
+  latchPinHighLow();
 }
 
-// void letterO() {
-//   setSegmentState(LOW, LOW, HIGH, HIGH, HIGH, LOW, HIGH);
-// }
 
 void letterT() {
-  setSegmentState(LOW, LOW, LOW, HIGH, HIGH, HIGH, HIGH);
+  shiftOut(dataPin, clockPin, MSBFIRST, symbols[19]);
+  latchPinHighLow();
 }
 
-// void letterP() {
-//   setSegmentState(HIGH, HIGH, LOW, LOW, HIGH, HIGH, HIGH);
-// }
-
 void symbolDashCenter() {
-  setSegmentState(LOW, LOW, LOW, LOW, LOW, LOW, HIGH);
+  shiftOut(dataPin, clockPin, MSBFIRST, symbols[10]);
+  latchPinHighLow();
 }
 
 void symbolBlank() {
-  setSegmentState(LOW, LOW, LOW, LOW, LOW, LOW, LOW);
+  clearSegments();
 }
 
-// void numberNeg1() {
-//   setSegmentState(LOW, HIGH, HIGH, LOW, LOW, LOW, HIGH);
-// }
-
-// void number0() {
-//   setSegmentState(HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, LOW);  // 0: ABCDEF
-// }
-
 void number1() {
-  setSegmentState(LOW, HIGH, HIGH, LOW, LOW, LOW, LOW);  // 1: BC
+  shiftOut(dataPin, clockPin, MSBFIRST, symbols[1]);
+  latchPinHighLow();
 }
 
 void number2() {
-  setSegmentState(HIGH, HIGH, LOW, HIGH, HIGH, LOW, HIGH);  // 2: ABDEG
+  shiftOut(dataPin, clockPin, MSBFIRST, symbols[2]);
+  latchPinHighLow();
 }
 
 void number3() {
-  setSegmentState(HIGH, HIGH, HIGH, HIGH, LOW, LOW, HIGH);  // 3: ABDEG
+  shiftOut(dataPin, clockPin, MSBFIRST, symbols[3]);
+  latchPinHighLow();
 }
 
 void number4() {
-  setSegmentState(LOW, HIGH, HIGH, LOW, LOW, HIGH, HIGH);  // 4: BCFG
+  shiftOut(dataPin, clockPin, MSBFIRST, symbols[4]);
+  latchPinHighLow();
 }
 
 void number5() {
-  setSegmentState(HIGH, LOW, HIGH, HIGH, LOW, HIGH, HIGH);  // 5: ADEF
+  shiftOut(dataPin, clockPin, MSBFIRST, symbols[5]);
+  latchPinHighLow();
 }
 
 void number6() {
-  setSegmentState(HIGH, LOW, HIGH, HIGH, HIGH, HIGH, HIGH);  // 6: ADEF
+  shiftOut(dataPin, clockPin, MSBFIRST, symbols[6]);
+  latchPinHighLow();
 }
 
 void number7() {
-  setSegmentState(HIGH, HIGH, HIGH, LOW, LOW, LOW, LOW);  // 7: ABC
+  shiftOut(dataPin, clockPin, MSBFIRST, symbols[7]);
+  latchPinHighLow();
 }
 
 void number8() {
-  setSegmentState(HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH);  // 8: ABCDEFG
+  shiftOut(dataPin, clockPin, MSBFIRST, symbols[8]);
+  latchPinHighLow();
 }
 
 void number9() {
-  setSegmentState(HIGH, HIGH, HIGH, HIGH, LOW, HIGH, HIGH);  // 9: ABCDEFG
+  shiftOut(dataPin, clockPin, MSBFIRST, symbols[9]);
+  latchPinHighLow();
 }
-

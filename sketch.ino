@@ -1,5 +1,4 @@
 #include "notes_display.h"
-// #include "notes_display_netlify.h" // Using https://arduinomidi.netlify.app/ for MIDI to Arduino conversion
 
 const uint8_t buzzerPin = 13;
 const uint8_t buttonPin = 12;
@@ -20,7 +19,7 @@ void buttonReleaseMemSetToTrue() {
 }
 
 void playMidi(uint8_t pin, const uint16_t notes[][3], size_t len){
-  for (uint16_t i = 0; i < len; i++) {  // Maximum of 2^16 notes; use `for (uint8_t i = 0; i < len; i++) {` if maximum of 256 notes; if maximum note limit has been reached, it endlessly loops until the button is pressed to stop
+  for (uint16_t i = 0; i < len; i++) {
     buttonReleaseMemSetToTrue();
     if (buttonStateInPlayMidi == LOW && buttonReleaseMem == true) break;
     snapMemoryMillis = millis();
@@ -46,12 +45,14 @@ void playMidi(uint8_t pin, const uint16_t notes[][3], size_t len){
 void setup() {
   // put your setup code here, to run once:
   // play midi by passing pin no., midi, midi len
+
   pinMode(buzzerPin, OUTPUT);  // Set buzzer pin as output
   pinMode(buttonPin, INPUT_PULLUP);  // Set button pin as input with internal pull-up resistor
-  // Initialize pin modes for A-G pins
-  for (uint8_t i = 0; i < 7; i++) {
-    pinMode(pins[i], OUTPUT);
-  }
+  
+  // Initialize pin modes for DS, ST_CP, and SH_CP of 74HC595
+  pinMode(latchPin, OUTPUT);
+  pinMode(clockPin, OUTPUT);
+  pinMode(dataPin, OUTPUT);
   
   // Initialize pin modes for D1, D2, D3
   for (uint8_t i = 0; i < 3; i++) {
