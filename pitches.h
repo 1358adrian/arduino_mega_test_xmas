@@ -1,7 +1,7 @@
 #include "note_define.h"
+#include <avr/pgmspace.h>
 
-// Max. around 300 notes allowed
-const uint16_t midi1[286][3] = {
+const uint16_t midi1[500][3] PROGMEM = {
  {A5, 73, 73},
  {Ab5, 63, 73},
  {C6, 240, 63},
@@ -288,7 +288,7 @@ const uint16_t midi1[286][3] = {
  {G5, 229, 63},
  {C6, 229, 63},
  {F5, 542, 635},
- /*{F5, 531, 63},
+ {F5, 531, 63},
  {C5, 188, 104},
  {F5, 219, 73},
  {G5, 510, 83},
@@ -501,5 +501,5 @@ const uint16_t midi1[286][3] = {
  {C6, 813, 73},
  {Ab5, 240, 63},
  {G5, 500, 73},
- {F5, 542, 635}*/
+ {F5, 542, 635}
 };
