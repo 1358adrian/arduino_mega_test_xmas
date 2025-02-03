@@ -1,5 +1,6 @@
 #include "symbols.h"
 #include "pitches.h"
+#include <avr/pgmspace.h> // This includes the necessary functions for PROGMEM
 
 struct NoteDisplay {
     uint16_t note;
@@ -9,7 +10,7 @@ struct NoteDisplay {
 };
 
 // Define an array of note-display mappings
-const NoteDisplay noteMappings[] = {
+const NoteDisplay noteMappings[] PROGMEM = {
     /*{C1, symbolBlank, letterC, number1},
     {Cb1, letterD, letterBorFlatSymbol, number1},
     {D1, symbolBlank, letterD, number1},
@@ -116,18 +117,25 @@ const NoteDisplay noteMappings[] = {
     {G9, symbolBlank, letterG, number9},*/
 };
 
+// Modified function to access data from PROGMEM
 void noteOnDisplay(uint16_t note) {
-    for (const auto& entry : noteMappings) {
+    for (uint8_t i = 0; i < sizeof(noteMappings) / sizeof(noteMappings[0]); i++) {
+        NoteDisplay entry;
+        memcpy_P(&entry, &noteMappings[i], sizeof(NoteDisplay)); // Load data from PROGMEM into local variable
+
         if (entry.note == note) {
             digit1();
             entry.digit1Func();
             delayAndClearSegments();
+
             digit2();
             entry.digit2Func();
             delayAndClearSegments();
+
             digit3();
             entry.digit3Func();
             delayAndClearSegments();
+
             return;
         }
     }
