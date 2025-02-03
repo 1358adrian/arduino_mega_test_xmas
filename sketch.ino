@@ -1,4 +1,5 @@
 #include "notes_display.h"
+#include <avr/pgmspace.h>
 
 const uint8_t buzzerPin = 13;
 const uint8_t buttonPin = 12;
@@ -18,7 +19,7 @@ void buttonReleaseMemSetToTrue() {
   }
 }
 
-void playMidi(uint8_t pin, const uint16_t notes[][3], size_t len){
+void playMidi(uint8_t pin, const uint16_t notes[][3], size_t len) {
   for (uint16_t i = 0; i < len; i++) {
     buttonReleaseMemSetToTrue();
     if (buttonStateInPlayMidi == LOW && buttonReleaseMem == true) break;
@@ -26,10 +27,10 @@ void playMidi(uint8_t pin, const uint16_t notes[][3], size_t len){
     do {
       buttonReleaseMemSetToTrue();
       if (buttonStateInPlayMidi == LOW && buttonReleaseMem == true) break;
-      tone(pin, notes[i][0]);
-      noteOnDisplay(notes[i][0]);
+      tone(pin, pgm_read_word_near(&notes[i][0])); // Read note from PROGMEM
+      noteOnDisplay(pgm_read_word_near(&notes[i][0])); // Read note from PROGMEM
       loopMemoryMillis = millis();
-    } while (loopMemoryMillis < (snapMemoryMillis + notes[i][1]));
+    } while (loopMemoryMillis < (snapMemoryMillis + pgm_read_word_near(&notes[i][1]))); // Read duration from PROGMEM
 
     snapMemoryMillis = millis();
     do {
@@ -38,7 +39,7 @@ void playMidi(uint8_t pin, const uint16_t notes[][3], size_t len){
       noTone(pin);
       noteOffDisplay();
       loopMemoryMillis = millis();
-    } while (loopMemoryMillis < (snapMemoryMillis + notes[i][2]));
+    } while (loopMemoryMillis < (snapMemoryMillis + pgm_read_word_near(&notes[i][2]))); // Read silence time from PROGMEM
   }
   buttonReleaseMem = true;
 }
