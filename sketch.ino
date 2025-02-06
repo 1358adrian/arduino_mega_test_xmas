@@ -34,7 +34,7 @@ void playMidi() {
     while (playing) {
         playing = false;
         
-        for (int i = 0; i < NUM_CHANNELS; i++) {
+        for (uint8_t i = 0; i < NUM_CHANNELS; i++) {
             BuzzerChannel &ch = channels[i];
 
             if (ch.count >= ch.len) continue; // Skip if channel is done
@@ -59,19 +59,19 @@ void playMidi() {
             }
         }
 
-        delayMicroseconds(400); // Tempo adjustment in case of simulation lag
+        delayMicroseconds(400); // Tempo adjustment
     }
 
     // Stop all buzzers
-    for (int i = 0; i < NUM_CHANNELS; i++) {
+    for (uint8_t i = 0; i < NUM_CHANNELS; i++) {
         channels[i].buzzer.stop();
     }
 }
 
 void setup() {
-    int pins[NUM_CHANNELS] = {13, 5, 4, 3};
+    uint8_t pins[NUM_CHANNELS] = {13, 5, 4, 3};
 
-    for (int i = 0; i < NUM_CHANNELS; i++) {
+    for (uint8_t i = 0; i < NUM_CHANNELS; i++) {
         channels[i].buzzer.begin(pins[i]);
     }
 
