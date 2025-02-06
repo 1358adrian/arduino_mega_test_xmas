@@ -59,7 +59,7 @@ void playMidi() {
             }
         }
 
-        delayMicroseconds(400); // Tempo adjustment
+        delayMicroseconds(400); // Tempo adjustment in case of simulation lag
     }
 
     // Stop all buzzers
